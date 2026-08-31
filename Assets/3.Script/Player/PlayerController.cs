@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    //������Ʈ
+    // 플레이어
     private PlayerInput input;
     private Rigidbody playerRigid;
     private Collider collider;
@@ -16,7 +16,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private AudioClip jumpClip;
 
-    //���� ����
+    // 스킬 이펙트
+    [SerializeField]
+    private GameObject leftSkillParticle;
+    [SerializeField]
+    private GameObject rightSkillParticle;
+    [SerializeField]
+    private GameObject jumpParticle;
+    [SerializeField]
+    private Renderer playerRenderer;
+    [SerializeField]
+    private Material[] rightSkillMaterials;
+
+    private Material[] originalMaterials;
+    private bool rightSkillEffectOn;
+
+    // 점프
     [SerializeField]
     private float jumpPower = 100f;
 
@@ -29,19 +44,18 @@ public class PlayerController : MonoBehaviour
     private bool isDead;
     private bool jumpConsumed;
 
-    //public �� ������Ƽ�� �Ұ���
 
-    //���� ��ų ����
+    // 왼쪽 클릭 스킬 게이지
     public float maxLeftGauge = 100f;
     public float currentLeftGauge;
     
-    //���콺 ��ǥ�� ��� ����
+    // 마우스 입력
     public Vector3 mouseScreenPosition;
     public Vector3 mouseWorldPosition;
     public Vector3 currentPosition;
     public float zDistance;
 
-    //������ ��ų ����
+    // 오른쪽 클릭 스킬 게이지
     public float maxRightGauge = 100f;
     public float currentRightGauge;
    
@@ -52,7 +66,19 @@ public class PlayerController : MonoBehaviour
         TryGetComponent(out playerRigid);
         TryGetComponent(out collider);
         TryGetComponent(out audio);
-        
+
+        if (leftSkillParticle != null)
+        {
+            leftSkillParticle.SetActive(false);
+        }
+        if (rightSkillParticle != null)
+        {
+            rightSkillParticle.SetActive(false);
+        }
+        if (jumpParticle != null)
+        {
+            jumpParticle.SetActive(false);
+        }
     }
 
     private void Start()
@@ -69,7 +95,6 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        //���� �ڵ�
         // 스페이스바를 눌렀다 뗄 때까지 점프는 한 번만. 계속 눌러도 다시 안 올라간다.
         if (input.isJump && !jumpConsumed)
         {
@@ -78,6 +103,13 @@ public class PlayerController : MonoBehaviour
             playerRigid.linearVelocity = Vector3.zero;
             playerRigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             audio.PlayOneShot(jumpClip);
+
+            // 스킬(좌/우) 쓰는 중엔 점프 파티클은 생략한다.
+            bool usingSkill = input.rightSkill || (input.leftSkill && input.canLeftSkill);
+            if (!usingSkill)
+            {
+                RestartParticle(jumpParticle);
+            }
         }
         else if (!input.isJump)
         {
@@ -108,7 +140,6 @@ public class PlayerController : MonoBehaviour
             currentLeftGauge += 10f * Time.deltaTime;
         }
         
-        //������ ��ų
         if (input.rightSkill && currentRightGauge >=0)
         {
             if (currentRightGauge <= 0)
@@ -123,6 +154,8 @@ public class PlayerController : MonoBehaviour
             collider.enabled = true;
             currentRightGauge += 10f * Time.deltaTime;
         }
+
+        UpdateEffects();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -148,6 +181,67 @@ public class PlayerController : MonoBehaviour
         if (GameManager.Instance != null)
         {
             GameManager.Instance.HandlePlayerDeath();
+        }
+
+        if (leftSkillParticle != null)
+        {
+            leftSkillParticle.SetActive(false);
+        }
+        if (rightSkillParticle != null)
+        {
+            rightSkillParticle.SetActive(false);
+        }
+
+        ApplyRightSkillMaterial(false);
+    }
+
+    private void UpdateEffects()
+    {
+        if (leftSkillParticle != null)
+        {
+            // 왼쪽 스킬을 실제로 쓰는 동안만 켠다.
+            leftSkillParticle.SetActive(input.leftSkill && input.canLeftSkill);
+        }
+
+        if (rightSkillParticle != null)
+        {
+            // 오른쪽 스킬을 실제로 쓰는 동안만 켠다.
+            rightSkillParticle.SetActive(input.rightSkill);
+        }
+
+        // 오른쪽 스킬 쓰는 동안 머터리얼 교체, 끝나면 원래대로.
+        ApplyRightSkillMaterial(input.rightSkill);
+    }
+
+    // 파티클 오브젝트를 껐다 켜서 처음부터 다시 재생시킨다.
+    private void RestartParticle(GameObject particle)
+    {
+        if (particle == null)
+        {
+            return;
+        }
+
+        particle.SetActive(false);
+        particle.SetActive(true);
+    }
+
+    private void ApplyRightSkillMaterial(bool useSkillMaterial)
+    {
+        if (playerRenderer == null || rightSkillMaterials == null || rightSkillMaterials.Length == 0)
+        {
+            return;
+        }
+
+        if (useSkillMaterial && !rightSkillEffectOn)
+        {
+            rightSkillEffectOn = true;
+            originalMaterials = playerRenderer.sharedMaterials;
+            playerRenderer.sharedMaterials = rightSkillMaterials;
+        }
+        else if (!useSkillMaterial && rightSkillEffectOn)
+        {
+            rightSkillEffectOn = false;
+            playerRenderer.sharedMaterials = originalMaterials;
         }
     }
 
