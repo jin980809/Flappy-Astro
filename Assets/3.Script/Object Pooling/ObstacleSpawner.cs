@@ -11,6 +11,9 @@ public class ObstacleSpawner : MonoBehaviour
     [Header("Pool")]
     [SerializeField] private ObjectPool pool;
 
+    [Header("Score")]
+    [SerializeField] private Transform player;
+
     [Header("Spawn Timing")]
     [SerializeField] private float spawnInterval = 1.5f;
 
@@ -24,6 +27,19 @@ public class ObstacleSpawner : MonoBehaviour
     [SerializeField] private float pairGap = 3f;
 
     private float timer;
+
+    private void Awake()
+    {
+        // 인스펙터에 안 넣었으면 "Player" 태그가 붙은 오브젝트를 찾아 쓴다.
+        if (player == null)
+        {
+            GameObject tagged = GameObject.FindGameObjectWithTag("Player");
+            if (tagged != null)
+            {
+                player = tagged.transform;
+            }
+        }
+    }
 
     private void Update()
     {
@@ -40,7 +56,7 @@ public class ObstacleSpawner : MonoBehaviour
         int count = Random.Range(1, 3); // 1 또는 2
         if (count == 1)
         {
-            SpawnAt(RandomY());
+            SpawnAt(RandomY(), true);
         }
         else
         {
@@ -66,8 +82,9 @@ public class ObstacleSpawner : MonoBehaviour
             pairCenterY = centerY;
         }
 
-        SpawnAt(pairCenterY - halfGap);
-        SpawnAt(pairCenterY + halfGap);
+        // 쌍 중 아래쪽 하나만 득점 담당으로 삼아 웨이브당 1점만 들어오게 한다.
+        SpawnAt(pairCenterY - halfGap, true);
+        SpawnAt(pairCenterY + halfGap, false);
     }
 
     private float RandomY()
@@ -75,7 +92,7 @@ public class ObstacleSpawner : MonoBehaviour
         return Random.Range(centerY - verticalRange, centerY + verticalRange);
     }
 
-    private void SpawnAt(float y)
+    private void SpawnAt(float y, bool countsForScore)
     {
         Vector3 position = new Vector3(spawnX, y, spawnZ);
         GameObject obstacle = pool.Get(position, Quaternion.identity);
@@ -83,7 +100,7 @@ public class ObstacleSpawner : MonoBehaviour
         ObstacleMover mover = obstacle.GetComponent<ObstacleMover>();
         if (mover != null)
         {
-            mover.Activate(pool);
+            mover.Activate(pool, player, countsForScore);
         }
     }
 }
