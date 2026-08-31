@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7026602958867534318
+--- !u!1 &8741748313038554697
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,10 +8,14 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8962395964299910598}
-  - component: {fileID: 8183819711546533399}
-  - component: {fileID: 438326750286844274}
-  - component: {fileID: 87325966232785455}
+  - component: {fileID: 8756203759924280101}
+  - component: {fileID: 2123751072771433329}
+  - component: {fileID: 6952862661859194937}
+  - component: {fileID: 1819355542684020871}
+  - component: {fileID: 368861939393094928}
+  - component: {fileID: 2325411883702836430}
+  - component: {fileID: 5932186303900656700}
+  - component: {fileID: 7280085382182231382}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -19,36 +23,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8962395964299910598
+--- !u!4 &8756203759924280101
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7026602958867534318}
+  m_GameObject: {fileID: 8741748313038554697}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.19404, y: 3.27353, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4943262975891824062}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &8183819711546533399
+--- !u!33 &2123751072771433329
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7026602958867534318}
+  m_GameObject: {fileID: 8741748313038554697}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &438326750286844274
+--- !u!23 &6952862661859194937
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7026602958867534318}
+  m_GameObject: {fileID: 8741748313038554697}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -90,13 +94,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &87325966232785455
+--- !u!65 &1819355542684020871
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7026602958867534318}
+  m_GameObject: {fileID: 8741748313038554697}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -111,49 +115,13 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &8890270951487258160
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4943262975891824062}
-  - component: {fileID: 1365307878168174232}
-  - component: {fileID: 335766743799426453}
-  - component: {fileID: 1557035323604421141}
-  - component: {fileID: 6149272461281801411}
-  m_Layer: 0
-  m_Name: Player
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4943262975891824062
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8890270951487258160}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8962395964299910598}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1365307878168174232
+--- !u!114 &368861939393094928
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8890270951487258160}
+  m_GameObject: {fileID: 8741748313038554697}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
@@ -194,7 +162,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Crouch[/Keyboard/c]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1557035323604421141}
+      - m_Target: {fileID: 2325411883702836430}
         m_TargetAssemblyTypeName: PlayerInput, Assembly-CSharp
         m_MethodName: EventJump
         m_Mode: 0
@@ -262,7 +230,7 @@ MonoBehaviour:
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1557035323604421141}
+      - m_Target: {fileID: 2325411883702836430}
         m_TargetAssemblyTypeName: PlayerInput, Assembly-CSharp
         m_MethodName: Event_MousePosition
         m_Mode: 0
@@ -278,7 +246,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Mouse[/Mouse/position]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1557035323604421141}
+      - m_Target: {fileID: 2325411883702836430}
         m_TargetAssemblyTypeName: PlayerInput, Assembly-CSharp
         m_MethodName: EventLeftMouse
         m_Mode: 0
@@ -292,18 +260,73 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 78ea8d1c-de74-4872-a726-01c02249a023
     m_ActionName: 'Player/LeftMouse[/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2325411883702836430}
+        m_TargetAssemblyTypeName: PlayerInput, Assembly-CSharp
+        m_MethodName: EventRightMouse
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f03767d8-fe59-436a-a20a-a5c573bc1fb2
+    m_ActionName: 'Player/RightMouse[/Mouse/rightButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!54 &335766743799426453
+--- !u!114 &2325411883702836430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8741748313038554697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd6a784bf5c8a0c4a87d8cd86b13c9fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
+  isJump: 0
+  leftSkill: 0
+  canLeftSkill: 1
+  rightSkill: 0
+  canRightSkill: 1
+  mousePosition: {x: 0, y: 0}
+--- !u!114 &5932186303900656700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8741748313038554697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac03bcceafc569b4dba5fdb3bf9346fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  jumpPower: 100
+  maxLeftGauge: 100
+  currentLeftGauge: 0
+  mouseScreenPosition: {x: 0, y: 0, z: 0}
+  mouseWorldPosition: {x: 0, y: 0, z: 0}
+  currentPosition: {x: 0, y: 0, z: 0}
+  zDistance: 10
+  maxRightGauge: 100
+  currentRightGauge: 0
+--- !u!54 &7280085382182231382
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8890270951487258160}
+  m_GameObject: {fileID: 8741748313038554697}
   serializedVersion: 5
   m_Mass: 1
   m_LinearDamping: 0
@@ -322,42 +345,5 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1557035323604421141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8890270951487258160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd6a784bf5c8a0c4a87d8cd86b13c9fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
-  isJump: 0
-  leftSkill: 0
-  rightSkill: 0
-  mousePosition: {x: 0, y: 0}
---- !u!114 &6149272461281801411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8890270951487258160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac03bcceafc569b4dba5fdb3bf9346fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  jumpPower: 100
-  maxLeftGauge: 100
-  currentLeftGauge: 0
-  mouseScreenPosition: {x: 0, y: 0, z: 0}
-  mouseWorldPosition: {x: 0, y: 0, z: 0}
-  currentPosition: {x: 0, y: 0, z: 0}
-  zDistance: 10
-  maxRightGauge: 100
-  currentRightGauge: 0

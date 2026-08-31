@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     //컴포넌트
     private PlayerInput input;
     private Rigidbody playerRigid;
+    private Collider collider;
 
     //점프 변수
     [SerializeField]
@@ -17,8 +18,7 @@ public class PlayerController : MonoBehaviour
     //왼쪽 스킬 변수
     public float maxLeftGauge = 100f;
     public float currentLeftGauge;
-
-
+    
     //마우스 좌표값 계산 변수
     public Vector3 mouseScreenPosition;
     public Vector3 mouseWorldPosition;
@@ -28,13 +28,14 @@ public class PlayerController : MonoBehaviour
     //오른쪽 스킬 변수
     public float maxRightGauge = 100f;
     public float currentRightGauge;
-
-
-
+   
+   
     private void Awake()
     {
         TryGetComponent(out input);
         TryGetComponent(out playerRigid);
+        TryGetComponent(out collider);
+        
     }
 
     private void Start()
@@ -57,8 +58,12 @@ public class PlayerController : MonoBehaviour
         }
 
         // 왼쪽 스킬
-        if (input.leftSkill && currentLeftGauge >= 0)
+        if (input.leftSkill && currentLeftGauge >= 0 && input.canLeftSkill)
         {
+            if (currentLeftGauge <= 0)
+            {
+                input.leftSkill = false;
+            }
             mouseScreenPosition = input.mousePosition;
             mouseScreenPosition.z = zDistance;
             mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
@@ -71,9 +76,27 @@ public class PlayerController : MonoBehaviour
 
             currentLeftGauge -= 25f * Time.deltaTime;
         }
-        else if (currentLeftGauge <= 100)
+        else if (!input.leftSkill && currentLeftGauge <= 100)
         {
-            currentLeftGauge += 25f * Time.deltaTime;
+            currentLeftGauge += 10f * Time.deltaTime;
+        }
+        
+        //오른쪽 스킬
+        if (input.rightSkill && currentRightGauge >=0)
+        {
+            if (currentRightGauge <= 0)
+            {
+                input.rightSkill = false;
+            }
+            collider.enabled = false;
+            currentRightGauge -= 25f * Time.deltaTime;
+        }
+        else if (!input.rightSkill && currentRightGauge <= 100)
+        {
+            collider.enabled = true;
+            currentRightGauge += 10f * Time.deltaTime;
         }
     }
+
+    
 }
