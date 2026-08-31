@@ -48,7 +48,12 @@ public sealed class RankingTestPanel : MonoBehaviour
 
         GUILayout.Space(8f);
         GUILayout.Label(resultMessage);
-        GUILayout.Label($"최고 점수: {(manager.HasRecords ? manager.BestScore.ToString() : "-")}");
+        GUIStyle bestScoreStyle = new GUIStyle(GUI.skin.label);
+        bestScoreStyle.fontStyle = FontStyle.Bold;
+        bestScoreStyle.normal.textColor = Color.yellow;
+        GUILayout.Label(
+            $"최고 점수: {(manager.HasRecords ? manager.BestScore.ToString() : "-")}",
+            manager.HasRecords ? bestScoreStyle : GUI.skin.label);
         GUILayout.Label($"저장된 기록: {manager.Records.Count} / 10");
         GUILayout.Label($"저장 경로: {manager.SaveFilePath}");
 
@@ -66,7 +71,7 @@ public sealed class RankingTestPanel : MonoBehaviour
             DateTimeOffset localTime =
                 DateTimeOffset.FromUnixTimeMilliseconds(record.achievedAtUnixMilliseconds).ToLocalTime();
 
-            GUILayout.Label($"{index + 1}위   점수 {record.score}   {localTime:yyyy-MM-dd HH:mm:ss.fff}");
+            GUILayout.Label($"#{index + 1}   {record.score} SCORE   {localTime:yyyy-MM-dd HH:mm:ss}");
         }
 
         GUILayout.EndScrollView();

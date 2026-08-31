@@ -11,8 +11,8 @@ public sealed class ScoreRowUI : MonoBehaviour
 
     public void SetRecord(int rank, ScoreRecord record)
     {
-        rankText.text = $"{rank}위";
-        scoreText.text = record.score.ToString();
+        rankText.text = $"#{rank}";
+        scoreText.text = $"{record.score} SCORE";
 
         DateTimeOffset achievedAt =
             DateTimeOffset.FromUnixTimeMilliseconds(record.achievedAtUnixMilliseconds).ToLocalTime();

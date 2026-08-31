@@ -89,6 +89,8 @@ public sealed class ScoreUI : MonoBehaviour
         if (bestScoreText != null)
         {
             bestScoreText.text = manager.HasRecords ? manager.BestScore.ToString() : "-";
+            bestScoreText.color = manager.HasRecords ? Color.yellow : Color.white;
+            bestScoreText.fontStyle = manager.HasRecords ? FontStyle.Bold : FontStyle.Normal;
         }
 
         if (rowContainer == null || rowPrefab == null)
