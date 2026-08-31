@@ -4,28 +4,36 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    //ÄÄÆ÷³ÍÆ®
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     private PlayerInput input;
     private Rigidbody playerRigid;
     private Collider collider;
 
-    //Á¡ÇÁ º¯¼ö
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     [SerializeField]
     private float jumpPower = 100f;
 
-    //public ´Ù ÇÁ·ÎÆÛÆ¼·Î ÇÒ°ÅÀÓ
+    // ì‚¬ë§ ì²˜ë¦¬
+    [SerializeField]
+    private string obstacleTag = "Obstacle";
+    [SerializeField]
+    private Vector3 deathKnockback = new Vector3(-3f, 1f, 0f);
 
-    //¿ÞÂÊ ½ºÅ³ º¯¼ö
+    private bool isDead;
+
+    //public ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½Ò°ï¿½ï¿½ï¿½
+
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½
     public float maxLeftGauge = 100f;
     public float currentLeftGauge;
     
-    //¸¶¿ì½º ÁÂÇ¥°ª °è»ê º¯¼ö
+    //ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public Vector3 mouseScreenPosition;
     public Vector3 mouseWorldPosition;
     public Vector3 currentPosition;
     public float zDistance;
 
-    //¿À¸¥ÂÊ ½ºÅ³ º¯¼ö
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½
     public float maxRightGauge = 100f;
     public float currentRightGauge;
    
@@ -47,7 +55,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        //Á¡ÇÁ ÄÚµå
+        if (isDead)
+        {
+            return;
+        }
+
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½
         if (input.isJump)
         {
             Vector3 jumpDirection = transform.up * jumpPower * Time.deltaTime;
@@ -57,7 +70,7 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        // ¿ÞÂÊ ½ºÅ³
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³
         if (input.leftSkill && currentLeftGauge >= 0 && input.canLeftSkill)
         {
             if (currentLeftGauge <= 0)
@@ -81,7 +94,7 @@ public class PlayerController : MonoBehaviour
             currentLeftGauge += 10f * Time.deltaTime;
         }
         
-        //¿À¸¥ÂÊ ½ºÅ³
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³
         if (input.rightSkill && currentRightGauge >=0)
         {
             if (currentRightGauge <= 0)
@@ -98,5 +111,30 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!isDead && other.CompareTag("Obstacle"))
+        {
+            Die();
+        }
+    }
+
+
+    // ì¤‘ë ¥ì„ ë„ê³  ë’¤ë¡œ ì‚´ì§ ë°€ì–´ë‚¸ ë’¤, ê²Œìž„ì˜¤ë²„ ì²˜ë¦¬ëŠ” GameManager ì— ë§¡ê¸´ë‹¤.
+    private void Die()
+    {
+        isDead = true;
+
+        playerRigid.useGravity = false;
+        playerRigid.linearVelocity = Vector3.zero;
+        playerRigid.angularVelocity = Vector3.zero;
+        playerRigid.AddForce(deathKnockback, ForceMode.Impulse);
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.HandlePlayerDeath();
+        }
+    }
+
+
 }

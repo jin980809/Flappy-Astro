@@ -16,6 +16,8 @@ public class ObstacleMover : MonoBehaviour
     [SerializeField] private float maxRotationSpeed = 180f;
 
     private ObjectPool pool;
+    private Transform player;
+    private bool scorePending;
     private float traveledDistance;
     private Vector3 rotationAxis;
     private float rotationSpeed;
@@ -23,10 +25,13 @@ public class ObstacleMover : MonoBehaviour
     /// <summary>
     /// 스포너가 풀에서 꺼낸 직후 호출한다.
     /// 반환할 풀을 기억하고, 이동 거리와 회전(축·속도)을 새로 뽑는다.
+    /// countsForScore 가 true 면 플레이어의 X 를 지나치는 순간 GameManager 에 1점을 넣는다.
     /// </summary>
-    public void Activate(ObjectPool owningPool)
+    public void Activate(ObjectPool owningPool, Transform playerTransform, bool countsForScore)
     {
         pool = owningPool;
+        player = playerTransform;
+        scorePending = countsForScore;
         traveledDistance = 0f;
         rotationAxis = Random.onUnitSphere;
         rotationSpeed = Random.Range(minRotationSpeed, maxRotationSpeed);
@@ -38,6 +43,16 @@ public class ObstacleMover : MonoBehaviour
         transform.Translate(Vector3.left * step, Space.World);
 
         transform.Rotate(rotationAxis, rotationSpeed * Time.deltaTime, Space.Self);
+
+        // 운석이 플레이어보다 왼쪽으로 넘어가면(= 지나가면) 웨이브당 한 번 득점한다.
+        if (scorePending && player != null && transform.position.x <= player.position.x)
+        {
+            scorePending = false;
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.AddPoint();
+            }
+        }
 
         traveledDistance += step;
         if (traveledDistance >= despawnDistance)
