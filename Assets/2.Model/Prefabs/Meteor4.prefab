@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 694fd82ab5554eb48826e7901e3ad337, type: 2}
+  - {fileID: 2100000, guid: ba2dc28a12f40b84aafdf2fefc899cd6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -127,3 +127,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleMover
   moveSpeed: 5
   despawnDistance: 25
+  minRotationSpeed: 30
+  maxRotationSpeed: 180
