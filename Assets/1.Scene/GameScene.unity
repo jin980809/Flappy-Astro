@@ -4753,6 +4753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac03bcceafc569b4dba5fdb3bf9346fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  bGMAudio: {fileID: 1143395538}
   dieClip: {fileID: 8300000, guid: af1e8e564081c41b9b0abd8d9f2e69b7, type: 3}
   jumpClip: {fileID: 8300000, guid: 2bd65c1eb53294ef9b8b6bf3417511a4, type: 3}
   leftSkillParticle: {fileID: 1769521235}

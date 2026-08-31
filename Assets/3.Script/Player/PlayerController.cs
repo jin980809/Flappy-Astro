@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     private Collider collider;
 
     // 오디오 처리
+    [SerializeField]
+    private AudioSource bGMAudio;
     private AudioSource audio;
     [SerializeField]
     private AudioClip dieClip;
@@ -177,6 +179,7 @@ public class PlayerController : MonoBehaviour
         playerRigid.angularVelocity = Vector3.zero;
         playerRigid.AddForce(deathKnockback, ForceMode.Impulse);
         audio.PlayOneShot(dieClip);
+        bGMAudio.Stop();
 
         if (GameManager.Instance != null)
         {

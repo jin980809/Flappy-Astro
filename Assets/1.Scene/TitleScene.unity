@@ -929,7 +929,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RankingBoard
   rankingText: {fileID: 382539853}
   maxRank: 10
-  emptyMessage: "\uC544\uC9C1 \uAE30\uB85D\uC774 \uC5C6\uC2B5\uB2C8\uB2E4."
+  emptyMessage: No Record
 --- !u!1 &897226364
 GameObject:
   m_ObjectHideFlags: 0
