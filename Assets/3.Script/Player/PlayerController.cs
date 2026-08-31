@@ -33,6 +33,9 @@ public class PlayerController : MonoBehaviour
     private Material[] originalMaterials;
     private bool rightSkillEffectOn;
 
+    // 이번 프레임에 오른쪽 스킬이 실제로 발동 중인지. (버튼 + 게이지 잔량 모두 충족)
+    private bool rightSkillActive;
+
     // 점프
     [SerializeField]
     private float jumpPower = 100f;
@@ -142,19 +145,32 @@ public class PlayerController : MonoBehaviour
             currentLeftGauge += 10f * Time.deltaTime;
         }
         
-        if (input.rightSkill && currentRightGauge >=0)
+        // 오른쪽 스킬: 버튼을 누르고 있고 게이지가 남아 있는 동안만 무적.
+        // 게이지가 바닥나면 버튼을 계속 눌러도 스킬이 꺼진다.
+        rightSkillActive = input.rightSkill && currentRightGauge > 0f;
+
+        if (rightSkillActive)
         {
-            if (currentRightGauge <= 0)
-            {
-                input.rightSkill = false;
-            }
             collider.enabled = false;
             currentRightGauge -= 25f * Time.deltaTime;
+            if (currentRightGauge < 0f)
+            {
+                currentRightGauge = 0f;
+            }
         }
-        else if (!input.rightSkill && currentRightGauge <= 100)
+        else
         {
             collider.enabled = true;
-            currentRightGauge += 10f * Time.deltaTime;
+
+            // 게이지 회복은 버튼을 뗀 상태에서만 진행한다.
+            if (!input.rightSkill && currentRightGauge < maxRightGauge)
+            {
+                currentRightGauge += 10f * Time.deltaTime;
+                if (currentRightGauge > maxRightGauge)
+                {
+                    currentRightGauge = maxRightGauge;
+                }
+            }
         }
 
         UpdateEffects();
@@ -208,12 +224,12 @@ public class PlayerController : MonoBehaviour
 
         if (rightSkillParticle != null)
         {
-            // 오른쪽 스킬을 실제로 쓰는 동안만 켠다.
-            rightSkillParticle.SetActive(input.rightSkill);
+            // 게이지가 바닥나면 버튼을 눌러도 꺼진다.
+            rightSkillParticle.SetActive(rightSkillActive);
         }
 
-        // 오른쪽 스킬 쓰는 동안 머터리얼 교체, 끝나면 원래대로.
-        ApplyRightSkillMaterial(input.rightSkill);
+        // 스킬 발동 중에만 머터리얼 교체, 끝나면(게이지 소진 포함) 원래대로.
+        ApplyRightSkillMaterial(rightSkillActive);
     }
 
     // 파티클 오브젝트를 껐다 켜서 처음부터 다시 재생시킨다.
