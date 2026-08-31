@@ -9,6 +9,13 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRigid;
     private Collider collider;
 
+    // 오디오 처리
+    private AudioSource audio;
+    [SerializeField]
+    private AudioClip dieClip;
+    [SerializeField]
+    private AudioClip jumpClip;
+
     //���� ����
     [SerializeField]
     private float jumpPower = 100f;
@@ -44,6 +51,7 @@ public class PlayerController : MonoBehaviour
         TryGetComponent(out input);
         TryGetComponent(out playerRigid);
         TryGetComponent(out collider);
+        TryGetComponent(out audio);
         
     }
 
@@ -69,6 +77,7 @@ public class PlayerController : MonoBehaviour
 
             playerRigid.linearVelocity = Vector3.zero;
             playerRigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+            audio.PlayOneShot(jumpClip);
         }
         else if (!input.isJump)
         {
@@ -134,6 +143,7 @@ public class PlayerController : MonoBehaviour
         playerRigid.linearVelocity = Vector3.zero;
         playerRigid.angularVelocity = Vector3.zero;
         playerRigid.AddForce(deathKnockback, ForceMode.Impulse);
+        audio.PlayOneShot(dieClip);
 
         if (GameManager.Instance != null)
         {
