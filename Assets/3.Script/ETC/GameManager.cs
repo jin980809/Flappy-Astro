@@ -4,14 +4,14 @@ using UnityEngine;
 /// <summary>
 /// 한 판(run) 전체를 관리한다.
 /// - 현재 점수를 보관하고 변경을 알린다.
-/// - 플레이어 사망 시 게임오버 처리: 장애물 생성 정지, 점수 기록, 사망 UI 패널 표시.
+/// - 플레이어 사망 시 게임오버 처리: 장애물 생성 정지, 점수 기록, GameOver 이벤트 발생.
+/// UI(점수·게이지·결과창)는 UIManager 가 이벤트를 구독해 담당한다.
 /// 씬마다 하나만 존재하는 싱글톤. GameManager.Instance 로 접근한다.
 /// </summary>
 public sealed class GameManager : MonoBehaviour
 {
     [Header("Scene References")]
     [SerializeField] private ObstacleSpawner spawner;
-    [SerializeField] private GameObject deathPanel;
 
     public static GameManager Instance { get; private set; }
 
@@ -33,11 +33,6 @@ public sealed class GameManager : MonoBehaviour
         }
 
         Instance = this;
-
-        if (deathPanel != null)
-        {
-            deathPanel.SetActive(false);
-        }
     }
 
     private void OnDestroy()
@@ -84,11 +79,6 @@ public sealed class GameManager : MonoBehaviour
         }
 
         ScoreManager.Instance.AddScore(CurrentScore);
-
-        if (deathPanel != null)
-        {
-            deathPanel.SetActive(true);
-        }
 
         GameOver?.Invoke();
     }

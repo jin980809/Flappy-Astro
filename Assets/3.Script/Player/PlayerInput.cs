@@ -13,7 +13,11 @@ public class PlayerInput : MonoBehaviour
     public bool rightSkill = false;
     public bool canRightSkill = true;
 
-    private WaitForSeconds wfs = new WaitForSeconds(4f);
+    [SerializeField] private float skillCooldown = 4f;
+
+    // 남은 쿨타임(초). 0 이면 쿨 아님.
+    public float leftCooldownRemaining = 0f;
+    public float rightCooldownRemaining = 0f;
 
     public Vector2 mousePosition = Vector2.zero;
 
@@ -79,13 +83,25 @@ public class PlayerInput : MonoBehaviour
     private IEnumerator LeftSkillCool()
     {
         canLeftSkill = false;
-        yield return wfs;
+        leftCooldownRemaining = skillCooldown;
+        while (leftCooldownRemaining > 0f)
+        {
+            leftCooldownRemaining -= Time.deltaTime;
+            yield return null;
+        }
+        leftCooldownRemaining = 0f;
         canLeftSkill = true;
     }
     private IEnumerator RightSkillCool()
     {
         canRightSkill = false;
-        yield return wfs;
+        rightCooldownRemaining = skillCooldown;
+        while (rightCooldownRemaining > 0f)
+        {
+            rightCooldownRemaining -= Time.deltaTime;
+            yield return null;
+        }
+        rightCooldownRemaining = 0f;
         canRightSkill = true;
     }
 }

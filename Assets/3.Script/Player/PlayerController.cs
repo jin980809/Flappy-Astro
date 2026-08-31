@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 deathKnockback = new Vector3(-3f, 1f, 0f);
 
     private bool isDead;
+    private bool jumpConsumed;
 
     //public �� ������Ƽ�� �Ұ���
 
@@ -61,13 +62,17 @@ public class PlayerController : MonoBehaviour
         }
 
         //���� �ڵ�
-        if (input.isJump)
+        // 스페이스바를 눌렀다 뗄 때까지 점프는 한 번만. 계속 눌러도 다시 안 올라간다.
+        if (input.isJump && !jumpConsumed)
         {
-            Vector3 jumpDirection = transform.up * jumpPower * Time.deltaTime;
+            jumpConsumed = true;
 
-            playerRigid.AddForce(Vector3.up * jumpPower);
             playerRigid.linearVelocity = Vector3.zero;
-
+            playerRigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+        }
+        else if (!input.isJump)
+        {
+            jumpConsumed = false;
         }
 
         // ���� ��ų
